@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BubblesBackground from "./components/BubblesBackground";
+import MenuBar from "./components/MenuBar";
 
 // --- HERO SLIDES ---
 const heroSlides = [
@@ -96,6 +97,7 @@ const testimonials = [
 
 export default function Home() {
 	const [slide, setSlide] = useState(0);
+	const [showBubbles, setShowBubbles] = useState(true);
 
 	// Simple hero slider logic
 	function nextSlide() {
@@ -108,72 +110,8 @@ export default function Home() {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-gray-100 flex flex-col overflow-x-hidden">
 			{/* MENU BAR */}
-			<nav className="w-full fixed top-0 left-0 z-50">
-				<div className="flex items-center justify-between px-4 sm:px-10 py-3 bg-white/20 backdrop-blur-2xl border-b border-white/30 shadow-lg glass-nav">
-					<Link
-						href="/"
-						className="flex items-center gap-2 text-2xl font-extrabold text-yellow-500 tracking-tight"
-					>
-						{/* Car icon */}
-						<svg
-							width="28"
-							height="28"
-							viewBox="0 0 24 24"
-							fill="none"
-							className="text-yellow-300"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<rect
-								x="3"
-								y="11"
-								width="18"
-								height="6"
-								rx="2"
-								fill="currentColor"
-							/>
-							<rect
-								x="5"
-								y="7"
-								width="14"
-								height="6"
-								rx="2"
-								fill="currentColor"
-								opacity="0.5"
-							/>
-							<circle cx="7" cy="19" r="2" fill="currentColor" />
-							<circle cx="17" cy="19" r="2" fill="currentColor" />
-						</svg>
-						<span>Varbegs Bilvård</span>
-					</Link>
-					<div className="flex gap-4 sm:gap-8">
-						{[
-							{ href: "/carwash", label: "Biltvätt" },
-              { href: "/tires", label: "Däck" },
-              { href: "/servuce", label: "Service" },
-							{ href: "/giftcards", label: "Presentkort" },
-							{ href: "#testimonials", label: "Kundomdömen" },
-							{ href: "#contact", label: "Kontakt" },
-
-              
-
-						].map((item) => (
-							<Link
-								key={item.href}
-								href={item.href}
-								className="relative px-2 py-1 text-yellow-500 font-semibold hover:text-yellow-300 transition
-            after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-400
-            after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
-							>
-								{item.label}
-							</Link>
-						))}
-					</div>
-				</div>
-				{/* REMOVE or comment out this line below */}
-				{/* <div className="h-0.5 w-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600" /> */}
-			</nav>
-
-			<BubblesBackground />
+			<MenuBar showBubbles={showBubbles} setShowBubbles={setShowBubbles} />
+			{showBubbles && <BubblesBackground />}
 			<main className="flex-1 w-full flex flex-col">
 				{/* HERO SLIDER */}
 				<section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
@@ -265,13 +203,7 @@ export default function Home() {
 				</section>
 				{/* ABOUT US SECTION */}
 				<section className="max-w-3xl mx-auto mb-12 px-4 pt-30 pb-20">
-					<h2
-						className="text-3xl font-bold text-yellow-900 mb-4 text-center drop-shadow-lg"
-						style={{
-							textShadow:
-								"0 4px 16px rgba(0,0,0,0.18), 0 1.5px 0px rgba(0,0,0,0.10)",
-						}}
-					>
+					<h2 className="text-3xl font-bold text-red-900 mb-4 text-center drop-shadow-lg">
 						Varför välja Varbegs Bilvård?
 					</h2>
 					<p
@@ -290,26 +222,26 @@ export default function Home() {
 
 				{/* SERVICE CARDS */}
 				<section className="w-full max-w-6xl mx-auto px-4 py-8 z-20 relative pb-20">
-					<h3 className="text-2xl font-bold text-yellow-900 mb-8 text-center">
+					<h3 className="text-2xl font-bold text-red-900 mb-8 text-center">
 						Våra tjänster & priser
 					</h3>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 						{services.map((s) => (
 							<div
 								key={s.title}
-								className="relative bg-white/95 rounded-2xl shadow-2xl hover:shadow-yellow-200 border border-gray-100 p-0 flex flex-col overflow-hidden transition-all duration-300 group"
+								className="relative bg-white/95 rounded-2xl shadow-2xl hover:shadow-red-200 border border-gray-100 p-0 flex flex-col overflow-hidden transition-all duration-300 group"
 							>
 								<div className="relative h-40 w-full">
 									<Image src={s.img} alt={s.title} fill className="object-cover" />
-									<div className="absolute top-3 left-3 bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+									<div className="absolute top-3 left-3 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
 										{s.price}
 									</div>
-									<div className="absolute top-3 right-3 bg-white text-yellow-900 px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+									<div className="absolute top-3 right-3 bg-white text-red-900 px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
 										{s.time}
 									</div>
 								</div>
 								<div className="p-6 flex-1 flex flex-col">
-									<h4 className="text-xl font-semibold text-yellow-900 mb-2">
+									<h4 className="text-xl font-semibold text-red-900 mb-2">
 										{s.title}
 									</h4>
 									<ul className="flex-1 text-gray-700 mb-4">
@@ -317,7 +249,7 @@ export default function Home() {
 											<li key={f} className="flex items-center mb-2">
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
-													className="h-5 w-5 text-yellow-600 mr-2"
+													className="h-5 w-5 text-red-600 mr-2"
 													viewBox="0 0 20 20"
 													fill="currentColor"
 												>
@@ -375,14 +307,14 @@ export default function Home() {
 								className="object-cover"
 								style={{ clipPath: "inset(0 50% 0 0)" }}
 							/>
-							<div className="absolute top-0 left-1/2 w-1 h-full bg-yellow-600 shadow-lg" />
-							<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-yellow-600 rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
-								<span className="text-yellow-600 text-2xl font-bold">↔</span>
+							<div className="absolute top-0 left-1/2 w-1 h-full bg-red-600 shadow-lg" />
+							<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-red-600 rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+								<span className="text-red-600 text-2xl font-bold">↔</span>
 							</div>
-							<div className="absolute left-4 top-4 bg-yellow-900/80 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
+							<div className="absolute left-4 top-4 bg-red-900/80 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
 								FÖRE
 							</div>
-							<div className="absolute right-4 top-4 bg-yellow-900/80 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
+							<div className="absolute right-4 top-4 bg-red-900/80 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
 								EFTER
 							</div>
 						</div>
@@ -400,8 +332,8 @@ export default function Home() {
 						backgroundAttachment: "fixed",
 					}}
 				>
-					<div className="flex-1 bg-yellow-50/80 rounded-2xl p-8 backdrop-blur-sm">
-						<h4 className="text-2xl font-bold text-yellow-900 mb-2">
+					<div className="flex-1 bg-red-50/80 rounded-2xl p-8 backdrop-blur-sm">
+						<h4 className="text-2xl font-bold text-red-900 mb-2">
 							Köp presentkort hos Varbegs Bilvård
 						</h4>
 						<p className="text-gray-700 mb-4 pt-2 pb-5">
@@ -436,7 +368,7 @@ export default function Home() {
 								key={i}
 								className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center"
 							>
-								<p className="text-gray-800 italic mb-4 text-center">"{t.text}"</p>
+								<p className="text-gray-800 italic mb-4 text-center">&quot;{t.text}&quot;</p>
 								<div className="font-bold text-blue-900">{t.name}</div>
 							</div>
 						))}

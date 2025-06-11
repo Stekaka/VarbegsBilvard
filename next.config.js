@@ -1,24 +1,16 @@
-const isGithubPages = process.env.NODE_ENV === 'production';
-const repo = 'VarbegsBilvard'; // Your repo name
+const repo = 'VarbegsBilvard';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const isProd = process.env.NODE_ENV === "production";
+
+module.exports = {
   output: 'export',
-  basePath: isGithubPages ? `/${repo}` : '',
-  assetPrefix: isGithubPages ? `/${repo}/` : '',
+  basePath: isProd ? `/${repo}` : "",
+  assetPrefix: isProd ? `/${repo}/` : "",
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'upload.wikimedia.org',
-      },
-      // Add more hostnames if you use more external image sources
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'upload.wikimedia.org' },
     ],
+    unoptimized: true,
   },
 };
-
-module.exports = nextConfig;

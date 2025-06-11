@@ -1,13 +1,16 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 
-export default function MenuBar() {
+export default function MenuBar({ showBubbles, setShowBubbles }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <nav className="w-full fixed top-0 left-0 z-50">
       <div className="flex items-center justify-between px-4 sm:px-10 py-3 bg-white/20 backdrop-blur-2xl border-b border-white/30 shadow-lg glass-nav">
         <Link
           href="/"
-          className="flex items-center gap-2 text-2xl font-extrabold text-yellow-500 tracking-tight"
+          className="flex items-center gap-2 text-2xl font-extrabold text-red-500 tracking-tight"
         >
           {/* Car icon */}
           <svg
@@ -15,7 +18,7 @@ export default function MenuBar() {
             height="28"
             viewBox="0 0 24 24"
             fill="none"
-            className="text-yellow-300"
+            className="text-red-400"
             xmlns="http://www.w3.org/2000/svg"
           >
             <rect
@@ -40,7 +43,8 @@ export default function MenuBar() {
           </svg>
           <span>Varbegs Bilvård</span>
         </Link>
-        <div className="flex gap-4 sm:gap-8">
+        <div className="flex gap-4 sm:gap-8 items-center">
+          {/* Nav links */}
           {[
             { href: "/carwash", label: "Biltvätt" },
             { href: "/tires", label: "Däck" },
@@ -52,15 +56,145 @@ export default function MenuBar() {
             <Link
               key={item.href}
               href={item.href}
-              className="relative px-2 py-1 text-yellow-500 font-semibold hover:text-yellow-300 transition
-                after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-400
-                after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
+              className="nav-link px-2 py-1"
             >
               {item.label}
             </Link>
           ))}
+
+          {/* Bubble toggle button for desktop */}
+          <button
+            onClick={() => setShowBubbles((b) => !b)}
+            onMouseUp={(e) => e.currentTarget.blur()} // Add this line
+            className="bubble-toggle hidden sm:flex items-center justify-center p-0 ml-2 bg-transparent border-none outline-none focus:outline-none"
+            aria-pressed={showBubbles}
+            title={showBubbles ? "Stäng bubblor" : "Visa bubblor"}
+            style={{ boxShadow: "none", background: "none" }}
+          >
+            <span
+              style={{
+                fontSize: "1.5em",
+                transition: "filter 0.2s",
+                filter: showBubbles
+                  ? "drop-shadow(0 0 8px #22c55e)"
+                  : "drop-shadow(0 0 8px #ef4444)",
+              }}
+            >
+              🫧
+            </span>
+            {showBubbles ? (
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 20 20"
+                fill="none"
+                style={{
+                  marginLeft: 4,
+                  transition: "filter 0.2s",
+                  filter: "drop-shadow(0 0 6px #22c55e)",
+                }}
+              >
+                <circle cx="10" cy="10" r="9" fill="#22c55e" />
+                <path
+                  d="M6 10.5l2.5 2.5L14 7.5"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ) : (
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 20 20"
+                fill="none"
+                style={{
+                  marginLeft: 4,
+                  transition: "filter 0.2s",
+                  filter: "drop-shadow(0 0 6px #ef4444)",
+                }}
+              >
+                <circle cx="10" cy="10" r="9" fill="#ef4444" />
+                <path
+                  d="M7 7l6 6M13 7l-6 6"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            )}
+          </button>
         </div>
+        {/* Hamburger icon for mobile */}
+        <button
+          className="sm:hidden p-2 rounded focus:outline-none"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          aria-label="Öppna meny"
+        >
+          <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
+            <rect x="4" y="6" width="16" height="2" rx="1" fill="#ef4444" />
+            <rect x="4" y="11" width="16" height="2" rx="1" fill="#ef4444" />
+            <rect x="4" y="16" width="16" height="2" rx="1" fill="#ef4444" />
+          </svg>
+        </button>
       </div>
+      {/* Mobile dropdown menu */}
+      {mobileMenuOpen && (
+        <div className="sm:hidden absolute top-full left-0 w-full bg-white/95 shadow-lg z-50 flex flex-col items-stretch">
+          {[
+            { href: "/carwash", label: "Biltvätt" },
+            { href: "/tires", label: "Däck" },
+            { href: "/servuce", label: "Service" },
+            { href: "/giftcards", label: "Presentkort" },
+            { href: "#testimonials", label: "Kundomdömen" },
+            { href: "#contact", label: "Kontakt" },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="px-6 py-4 text-red-700 font-semibold border-b border-red-100 hover:bg-red-50 transition"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          {/* Bubble toggle in mobile menu */}
+          <button
+            onClick={() => {
+              setShowBubbles((b) => !b);
+              setMobileMenuOpen(false);
+            }}
+            className="flex items-center justify-center gap-2 px-6 py-4 text-red-700 font-semibold"
+            aria-pressed={showBubbles}
+            title={showBubbles ? "Stäng bubblor" : "Visa bubblor"}
+          >
+            <span style={{ fontSize: "1.5em" }}>🫧</span>
+            {showBubbles ? (
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="9" fill="#22c55e" />
+                <path
+                  d="M6 10.5l2.5 2.5L14 7.5"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="9" fill="#ef4444" />
+                <path
+                  d="M7 7l6 6M13 7l-6 6"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+      )}
     </nav>
   );
 }
