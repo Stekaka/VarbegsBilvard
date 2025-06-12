@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BubblesBackground from "./components/BubblesBackground";
@@ -97,7 +97,24 @@ const testimonials = [
 
 export default function Home() {
 	const [slide, setSlide] = useState(0);
-	const [showBubbles, setShowBubbles] = useState(true);
+	const [showBubbles, setShowBubbles] = useState(() => {
+		if (typeof window !== "undefined") {
+			const stored = localStorage.getItem("showBubbles");
+			return stored !== null ? stored === "true" : true;
+		}
+		return true;
+	});
+
+	// On mount, read from localStorage
+	useEffect(() => {
+		const stored = localStorage.getItem("showBubbles");
+		if (stored !== null) setShowBubbles(stored === "true");
+	}, []);
+
+	// When showBubbles changes, save to localStorage
+	useEffect(() => {
+		localStorage.setItem("showBubbles", showBubbles);
+	}, [showBubbles]);
 
 	// Simple hero slider logic
 	function nextSlide() {
@@ -137,13 +154,21 @@ export default function Home() {
 						<div className="flex gap-4 justify-center">
 							<Link
 								href={heroSlides[slide].cta.href}
-								className="glassy-btn glassy-btn-yellow"
+								className="px-7 py-3 rounded-full font-semibold text-lg shadow-xl bg-gradient-to-r from-red-500 to-red-700 text-white backdrop-blur-md bg-opacity-80 border border-white/30 hover:scale-105 hover:from-red-600 hover:to-red-800 transition-all duration-200"
+								style={{
+									boxShadow: "0 4px 32px 0 rgba(239,68,68,0.18), 0 1.5px 0 0 rgba(0,0,0,0.04)",
+									textShadow: "0 2px 8px rgba(0,0,0,0.18)",
+								}}
 							>
 								{heroSlides[slide].cta.text}
 							</Link>
 							<Link
 								href={heroSlides[slide].cta2.href}
-								className="glassy-btn glassy-btn-white"
+								className="px-7 py-3 rounded-full font-semibold text-lg shadow bg-white/80 text-red-700 border border-white/30 hover:bg-white/90 hover:text-red-800 transition-all duration-200"
+								style={{
+									boxShadow: "0 2px 12px 0 rgba(239,68,68,0.10)",
+									textShadow: "0 1px 4px rgba(0,0,0,0.10)",
+								}}
 							>
 								{heroSlides[slide].cta2.text}
 							</Link>
@@ -275,86 +300,36 @@ export default function Home() {
 					</div>
 				</section>
 
-				{/* BEFORE/AFTER SECTION */}
-				<section className="w-full max-w-5xl mx-auto px-4 py-16 flex flex-col md:flex-row items-center gap-10 pb-20">
-					<div className="flex-1">
-						<h4 className="text-3xl font-bold text-yellow-900 mb-2">
-							Före & Efter
-						</h4>
-						<p className="text-gray-700 mb-4 pt-2 pb-5">
-							Varför ska du välja oss? Dra i handtaget så ser du varför!
-						</p>
-						<Link
-							href="/carwash"
-							className="glassy-btn glassy-btn-yellow"
-						>
-							Boka din tvätt
-						</Link>
-					</div>
-					<div className="flex-1 relative w-full h-64 rounded-xl overflow-hidden shadow-lg">
-						<div className="absolute inset-0">
-							<Image
-								src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80"
-								alt="Efter"
-								fill
-								className="object-cover"
-								style={{ clipPath: "inset(0 0 0 50%)" }}
-							/>
-							<Image
-								src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80"
-								alt="Före"
-								fill
-								className="object-cover"
-								style={{ clipPath: "inset(0 50% 0 0)" }}
-							/>
-							<div className="absolute top-0 left-1/2 w-1 h-full bg-red-600 shadow-lg" />
-							<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-red-600 rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
-								<span className="text-red-600 text-2xl font-bold">↔</span>
-							</div>
-							<div className="absolute left-4 top-4 bg-red-900/80 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
-								FÖRE
-							</div>
-							<div className="absolute right-4 top-4 bg-red-900/80 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
-								EFTER
-							</div>
-						</div>
-					</div>
-				</section>
+
 
 				{/* GIFT CARD SECTION */}
 				<section
-					className="w-full max-w-full mx-auto px-4 py-20 min-h-[600px] flex flex-col md:flex-row items-center justify-center gap-10 rounded-2xl shadow-inner mb-12"
+					className="w-full max-w-full mx-auto px-4 py-20 min-h-[400px] flex flex-col items-center justify-center gap-6 rounded-2xl shadow-inner mb-12 text-center"
 					style={{
-						backgroundImage:
-							"url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')",
+						backgroundImage: "url('/CarbonBg.png')",
 						backgroundSize: "cover",
 						backgroundPosition: "center",
 						backgroundAttachment: "fixed",
 					}}
 				>
-					<div className="flex-1 bg-red-50/80 rounded-2xl p-8 backdrop-blur-sm">
-						<h4 className="text-2xl font-bold text-red-900 mb-2">
-							Köp presentkort hos Varbegs Bilvård
-						</h4>
-						<p className="text-gray-700 mb-4 pt-2 pb-5">
-							Ge bort ett skinande rent fordon! Våra presentkort gäller på alla våra tjänster.
-						</p>
-						<Link
-							href="/giftcards"
-							className="glassy-btn glassy-btn-yellow"
-						>
-							Köp här
-						</Link>
-					</div>
-					<div className="flex-1 flex justify-center">
-						<Image
-							src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
-							alt="Presentkort"
-							width={300}
-							height={260}
-							className="rounded-xl shadow-lg"
-						/>
-					</div>
+					<h4 className="text-3xl font-bold text-white drop-shadow-lg mb-4">
+						Köp presentkort hos Varbegs Bilvård
+					</h4>
+					<p className="text-lg text-white/90 font-medium max-w-2xl mb-6 drop-shadow">
+						Ge bort ett skinande rent fordon! Våra presentkort gäller på alla våra tjänster.
+					</p>
+					<Link
+						href="/giftcards"
+						className="inline-block px-8 py-3 rounded-full font-semibold text-lg shadow-xl bg-gradient-to-r from-red-500 to-red-700 text-white backdrop-blur-md bg-opacity-80 border border-white/30 hover:scale-105 hover:from-red-600 hover:to-red-800 transition-all duration-200"
+						style={{
+							boxShadow: "0 4px 32px 0 rgba(239,68,68,0.18), 0 1.5px 0 0 rgba(0,0,0,0.04)",
+							textShadow: "0 2px 8px rgba(0,0,0,0.18)",
+						}}
+						role="button"
+						tabIndex={0}
+					>
+						Köp här
+					</Link>
 				</section>
 
 				{/* TESTIMONIALS */}
@@ -376,8 +351,16 @@ export default function Home() {
 				</section>
 			</main>
 			{/* FOOTER */}
-			<footer className="bg-gray-900 text-gray-100 text-center py-6 mt-12 rounded-t-3xl shadow-inner">
-				<p className="text-base font-medium">
+			<footer
+				className="w-full bg-gray-900/80 backdrop-blur-xl border-t border-white/20 text-gray-100 text-center py-6 mt-12 rounded-t-3xl shadow-inner"
+				style={{
+					boxShadow: "0 -8px 32px 0 rgba(0,0,0,0.10)",
+					background: "linear-gradient(90deg, rgba(30,41,59,0.92) 0%, rgba(30,41,59,0.85) 100%)",
+					borderTopLeftRadius: "1.5rem",
+					borderTopRightRadius: "1.5rem",
+				}}
+			>
+				<p className="text-base font-medium tracking-wide drop-shadow">
 					&copy; {new Date().getFullYear()} Varbegs Bilvård. All rights reserved.
 				</p>
 			</footer>

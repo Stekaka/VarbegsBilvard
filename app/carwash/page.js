@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MenuBar from "../components/MenuBar";
 import BubblesBackground from "../components/BubblesBackground";
 import { FaCarSide, FaSprayCan, FaMagic, FaShieldAlt, FaEraser, FaSoap, FaStar } from "react-icons/fa";
@@ -23,7 +23,23 @@ const timeSlots = [
 ];
 
 export default function CarwashPage() {
-	const [showBubbles, setShowBubbles] = useState(true);
+	const [showBubbles, setShowBubbles] = useState(() => {
+		if (typeof window !== "undefined") {
+			const stored = localStorage.getItem("showBubbles");
+			return stored !== null ? stored === "true" : true;
+		}
+		return true;
+	});
+
+	useEffect(() => {
+		const stored = localStorage.getItem("showBubbles");
+		if (stored !== null) setShowBubbles(stored === "true");
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("showBubbles", showBubbles);
+	}, [showBubbles]);
+
 	const [booking, setBooking] = useState({
 		open: false,
 		service: null,
@@ -236,6 +252,20 @@ export default function CarwashPage() {
 					</div>
 				</div>
 			)}
+			{/* Footer */}
+			<footer
+				className="w-full bg-gray-900/80 backdrop-blur-xl border-t border-white/20 text-gray-100 text-center py-6 mt-12 rounded-t-3xl shadow-inner"
+				style={{
+					boxShadow: "0 -8px 32px 0 rgba(0,0,0,0.10)",
+					background: "linear-gradient(90deg, rgba(30,41,59,0.92) 0%, rgba(30,41,59,0.85) 100%)",
+					borderTopLeftRadius: "1.5rem",
+					borderTopRightRadius: "1.5rem",
+				}}
+			>
+				<p className="text-base font-medium tracking-wide drop-shadow">
+					&copy; {new Date().getFullYear()} Varbegs Bilvård. All rights reserved.
+				</p>
+			</footer>
 		</div>
 	);
 }

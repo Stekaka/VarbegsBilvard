@@ -48,10 +48,10 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
           {[
             { href: "/carwash", label: "Biltvätt" },
             { href: "/tires", label: "Däck" },
-            { href: "/servuce", label: "Service" },
+            { href: "/service", label: "Service" },
             { href: "/giftcards", label: "Presentkort" },
             { href: "#testimonials", label: "Kundomdömen" },
-            { href: "#contact", label: "Kontakt" },
+            { href: "/contact", label: "Kontakt" },
           ].map((item) => (
             <Link
               key={item.href}
@@ -155,10 +155,10 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
           {[
             { href: "/carwash", label: "Biltvätt" },
             { href: "/tires", label: "Däck" },
-            { href: "/servuce", label: "Service" },
+            { href: "/service", label: "Service" },
             { href: "/giftcards", label: "Presentkort" },
             { href: "#testimonials", label: "Kundomdömen" },
-            { href: "#contact", label: "Kontakt" },
+            { href: "/contact", label: "Kontakt" },
           ].map((item) => (
             <Link
               key={item.href}
