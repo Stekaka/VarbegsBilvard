@@ -43,7 +43,7 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
           </svg>
           <span>Varbegs Bilvård</span>
         </Link>
-        <div className="flex gap-4 sm:gap-8 items-center">
+        <div className="hidden sm:flex gap-4 sm:gap-8 items-center">
           {/* Nav links */}
           {[
             { href: "/carwash", label: "Biltvätt" },
@@ -141,7 +141,17 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
       </div>
       {/* Mobile dropdown menu */}
       {mobileMenuOpen && (
-        <div className="sm:hidden absolute top-full left-0 w-full bg-white/95 shadow-lg z-50 flex flex-col items-stretch">
+        <div className="sm:hidden absolute top-full left-0 w-full z-50 flex flex-col items-stretch
+    bg-white/30 backdrop-blur-2xl border-b border-white/30 shadow-lg glass-nav
+    animate-fade-in"
+          style={{
+            borderTopLeftRadius: "0 0 1.5rem 1.5rem",
+            borderTopRightRadius: "0 0 1.5rem 1.5rem",
+            // Optional: add a little extra blur for mobile
+            WebkitBackdropFilter: "blur(18px)",
+            backdropFilter: "blur(18px)",
+          }}
+        >
           {[
             { href: "/carwash", label: "Biltvätt" },
             { href: "/tires", label: "Däck" },
@@ -153,7 +163,7 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
             <Link
               key={item.href}
               href={item.href}
-              className="px-6 py-4 text-red-700 font-semibold border-b border-red-100 hover:bg-red-50 transition"
+              className="px-6 py-4 text-red-700 font-semibold border-b border-white/30 hover:bg-white/40 hover:text-red-600 transition"
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}
@@ -165,7 +175,7 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
               setShowBubbles((b) => !b);
               setMobileMenuOpen(false);
             }}
-            className="flex items-center justify-center gap-2 px-6 py-4 text-red-700 font-semibold"
+            className="flex items-center justify-center gap-2 px-6 py-4 text-red-700 font-semibold hover:bg-white/40 hover:text-red-600 transition"
             aria-pressed={showBubbles}
             title={showBubbles ? "Stäng bubblor" : "Visa bubblor"}
           >
