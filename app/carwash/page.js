@@ -76,18 +76,18 @@ export default function CarwashPage() {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-red-100 via-gray-200 to-gray-800 flex flex-col overflow-x-hidden relative">
+		<div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-gray-100 flex flex-col overflow-x-hidden relative">
 			<MenuBar showBubbles={showBubbles} setShowBubbles={setShowBubbles} />
 			{showBubbles && <BubblesBackground />}
 			{/* Decorative overlay */}
 			<div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
-				<div className="absolute top-0 left-0 w-1/2 h-1/2 bg-red-100 rounded-full blur-3xl opacity-40" />
-				<div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-red-200 rounded-full blur-2xl opacity-30" />
+				<div className="absolute top-0 left-0 w-1/2 h-1/2 bg-yellow-100 rounded-full blur-3xl opacity-40" />
+				<div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-yellow-200 rounded-full blur-2xl opacity-30" />
 				<div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gray-600 rounded-full blur-2xl opacity-30" />
 			</div>
 			<main className="flex-1 w-full flex flex-col relative z-10 pt-20">
 				<section className="w-full max-w-5xl mx-auto px-4 py-16">
-					<h1 className="text-4xl sm:text-5xl font-extrabold text-red-900 mb-4 text-center drop-shadow-lg">
+					<h1 className="text-4xl sm:text-5xl font-extrabold text-accent-dark mb-4 text-center drop-shadow-lg">
 						Biltvätt & Rekond
 					</h1>
 					<p className="text-lg text-gray-700 text-center mb-12 max-w-2xl mx-auto">
@@ -97,21 +97,26 @@ export default function CarwashPage() {
 						{carwashServices.map((s) => (
 							<div
 								key={s.title}
-								className="w-full max-w-xs mx-auto bg-white/90 rounded-3xl shadow-xl border border-red-100 p-6 flex flex-col items-center transition-all duration-300 group hover:-translate-y-2 hover:shadow-2xl hover:shadow-red-200"
+								className="w-full max-w-xs mx-auto bg-white/90 rounded-3xl shadow-xl border border-yellow-100 p-6 flex flex-col items-center transition-all duration-300 group hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-200"
 								style={{
-									boxShadow: "0 4px 32px 0 rgba(239,68,68,0.06), 0 2px 8px 0 rgba(0,0,0,0.08)",
+									boxShadow: "0 4px 32px 0 rgba(253,202,34,0.06), 0 2px 8px 0 rgba(0,0,0,0.08)",
 								}}
 							>
-								<div className="mb-4 text-4xl text-red-400 drop-shadow-lg">{s.icon}</div>
-								<h2 className="text-xl font-bold text-red-900 mb-2 text-center">{s.title}</h2>
+								<div className="mb-4 text-4xl text-accent drop-shadow-lg">{s.icon}</div>
+								<h2 className="text-xl font-bold text-accent-dark mb-2 text-center">{s.title}</h2>
 								<div className="mb-4">
-									<span className="inline-block bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-bold px-4 py-1 rounded-full shadow">
+									<span className="inline-block bg-gradient-to-r from-gold-light to-gold-dark text-white text-sm font-bold px-4 py-1 rounded-full shadow"
+										style={{
+											background: "linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-dark))",
+											color: "#fff"
+										}}
+									>
 										{s.price}
 									</span>
 								</div>
 								<p className="text-gray-700 text-center mb-6">{s.desc}</p>
 								<button
-									className="glassy-btn glassy-btn-red mt-auto text-center font-bold w-full"
+									className="glassy-btn glassy-btn-yellow mt-auto text-center font-bold w-full"
 									onClick={() => setBooking({
 										open: true,
 										service: s.title,
@@ -138,11 +143,11 @@ export default function CarwashPage() {
 					onClick={() => setBooking(b => ({ ...b, open: false }))}
 				>
 					<div
-						className="relative bg-gradient-to-br from-white via-red-50 to-red-100 rounded-2xl shadow-2xl w-full max-w-3xl flex flex-col md:flex-row overflow-auto border border-red-100 max-h-[95vh]"
+						className="relative bg-gradient-to-br from-white via-yellow-50 to-yellow-100 rounded-2xl shadow-2xl w-full max-w-3xl flex flex-col md:flex-row overflow-auto border border-yellow-100 max-h-[95vh]"
 						onClick={e => e.stopPropagation()}
 					>
 						<button
-							className="absolute top-4 right-4 text-red-400 hover:text-red-600 text-3xl font-bold z-10 transition"
+							className="absolute top-4 right-4 text-accent hover:text-accent-dark text-3xl font-bold z-10 transition"
 							onClick={() => setBooking(b => ({ ...b, open: false }))}
 							aria-label="Stäng"
 							style={{ lineHeight: 1 }}
@@ -152,10 +157,10 @@ export default function CarwashPage() {
 						{/* Left: Info & Calendar */}
 						<div className="flex-1 p-4 sm:p-8 flex flex-col justify-center">
 							<div className="flex flex-col items-center mb-6">
-								<div className="text-4xl text-red-400 mb-2">
+								<div className="text-4xl text-accent mb-2">
 									{carwashServices.find(s => s.title === booking.service)?.icon}
 								</div>
-								<h3 className="text-2xl font-extrabold text-red-900 mb-1 text-center">
+								<h3 className="text-2xl font-extrabold text-accent-dark mb-1 text-center">
 									{booking.service}
 								</h3>
 								<div className="text-gray-600 text-center mb-2 text-base">
@@ -163,7 +168,7 @@ export default function CarwashPage() {
 								</div>
 							</div>
 							<div>
-								<div className="text-sm font-semibold text-red-700 mb-2">1. Välj datum</div>
+								<div className="text-sm font-semibold text-accent mb-2">1. Välj datum</div>
 								<div className="flex justify-center mb-6">
 									<DatePicker
 										inline
@@ -178,7 +183,7 @@ export default function CarwashPage() {
 										minDate={new Date()}
 										calendarStartDay={1}
 										dayClassName={date =>
-											"cursor-pointer rounded-full hover:bg-red-100 transition"
+											"cursor-pointer rounded-full hover:bg-yellow-100 transition"
 										}
 									/>
 								</div>
@@ -189,7 +194,7 @@ export default function CarwashPage() {
 									<input
 										type="text"
 										required
-										className="block mt-1 w-full border border-red-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400 bg-white"
+										className="block mt-1 w-full border border-yellow-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-white"
 										value={booking.name}
 										onChange={e => setBooking(b => ({ ...b, name: e.target.value }))}
 									/>
@@ -199,7 +204,7 @@ export default function CarwashPage() {
 									<input
 										type="tel"
 										required
-										className="block mt-1 w-full border border-red-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400 bg-white"
+										className="block mt-1 w-full border border-yellow-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-white"
 										value={booking.phone}
 										onChange={e => setBooking(b => ({ ...b, phone: e.target.value }))}
 									/>
@@ -207,10 +212,10 @@ export default function CarwashPage() {
 							</div>
 						</div>
 						{/* Divider */}
-						<div className="w-full h-px bg-gradient-to-r from-red-100 via-red-200 to-red-100 my-2 md:my-0 md:w-px md:h-auto hidden md:block" />
+						<div className="w-full h-px bg-gradient-to-r from-yellow-100 via-yellow-200 to-yellow-100 my-2 md:my-0 md:w-px md:h-auto hidden md:block" />
 						{/* Right: Time slots */}
 						<div className="flex flex-col justify-center items-center p-4 sm:p-8 w-full md:min-w-[180px] bg-white/80">
-							<div className="text-sm font-semibold text-red-700 mb-2">2. Välj tid</div>
+							<div className="text-sm font-semibold text-accent mb-2">2. Välj tid</div>
 							<div className="flex flex-col gap-2 w-full">
 								{timeSlots.map(t => (
 									<button
@@ -219,8 +224,8 @@ export default function CarwashPage() {
 										className={`w-full px-4 py-3 rounded-full font-semibold border transition text-base shadow-sm
 											${
 												booking.time === t
-													? "bg-red-600 text-white border-red-600 shadow-lg"
-													: "bg-white text-red-700 border-red-200 hover:bg-red-100"
+													? "bg-accent text-white border-accent shadow-lg"
+													: "bg-white text-accent border-yellow-200 hover:bg-yellow-100"
 											}
 											${!booking.date ? "opacity-50 pointer-events-none" : ""}
 										`}
@@ -232,10 +237,10 @@ export default function CarwashPage() {
 								))}
 							</div>
 							{booking.error && (
-								<div className="text-red-600 mt-2 text-center">{booking.error}</div>
+								<div className="text-accent mt-2 text-center">{booking.error}</div>
 							)}
 							<button
-								className="glassy-btn glassy-btn-red w-full mt-2"
+								className="glassy-btn glassy-btn-yellow w-full mt-2"
 								type="button"
 								disabled={
 									booking.loading ||

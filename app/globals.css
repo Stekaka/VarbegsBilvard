@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --gold: #fdca22;
+  --gold-dark: #c59d16;
+  --gold-light: #ffe066;
+  --accent: var(--gold); /* use for main accent */
+  --accent-dark: var(--gold-dark);
+  --accent-light: var(--gold-light);
+  /* Add more as needed */
 }
 
 @theme inline {
@@ -92,17 +99,17 @@ input[type="time"]:focus {
   transition: filter 0.18s, box-shadow 0.18s;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
   background: rgba(255,255,255,0.7);
-  color: #ef4444;
+  color: var(--accent-dark);
   border: none;
   cursor: pointer;
 }
 
 .glassy-btn:hover, .glassy-btn:focus {
   background: rgba(255,255,255,0.85);
-  color: #b91c1c; /* Tailwind red-700 */
-  border-color: #f87171;
+  color: var(--accent-dark);
+  border-color: var(--accent);
   box-shadow:
-    0 8px 32px 0 rgba(239,68,68,0.13),
+    0 8px 32px 0 var(--accent-light),
     0 2px 8px 0 rgba(0,0,0,0.10);
   text-shadow: 0 2px 12px rgba(255,255,255,0.18), 0 1px 0px rgba(255,255,255,0.10);
   filter: brightness(1.08) saturate(1.1);
@@ -113,14 +120,15 @@ input[type="time"]:focus {
   transform: scale(0.96);
 }
 
-.glassy-btn-red {
-  background: linear-gradient(90deg, #f87171 0%, #ef4444 100%);
+.glassy-btn-red,
+.glassy-btn-gold {
+  background: linear-gradient(90deg, #ffe066 0%, #fdca22 100%);
   color: #fff;
 }
 
-.glassy-btn-red:hover, .glassy-btn-red:focus {
-  filter: brightness(1.08) saturate(1.1);
-  box-shadow: 0 8px 32px 0 rgba(239,68,68,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+.glassy-btn-red:hover, .glassy-btn-red:focus,
+.glassy-btn-gold:hover, .glassy-btn-gold:focus {
+  box-shadow: 0 8px 32px 0 rgba(253,202,34,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
 }
 
 /* Nav bar glass effect (already red in your latest code) */
@@ -132,9 +140,9 @@ input[type="time"]:focus {
   border-right: 1px solid rgba(255,255,255,0.05);
 }
 
-/* Nav link style for red theme */
+
 .nav-link {
-  color: #ef4444; /* Tailwind red-500 */
+  color: var(--accent);
   font-weight: 600;
   position: relative;
   transition: color 0.18s cubic-bezier(.4,0,.2,1);
@@ -142,7 +150,7 @@ input[type="time"]:focus {
 
 .nav-link:hover,
 .nav-link:focus {
-  color: #b91c1c; /* Tailwind red-700 */
+  color: var(--accent-dark);
 }
 
 .nav-link::after {
@@ -153,7 +161,7 @@ input[type="time"]:focus {
   bottom: -2px;
   width: 100%;
   height: 2px;
-  background: linear-gradient(to right, #f87171, #ef4444); /* Red gradient underline */
+  background: linear-gradient(to right, #ffe066, #fdca22); 
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s cubic-bezier(.4,0,.2,1);
@@ -185,14 +193,14 @@ input[type="time"]:focus {
 .bubble-toggle[aria-pressed="true"]:focus span,
 .bubble-toggle[aria-pressed="true"]:hover svg,
 .bubble-toggle[aria-pressed="true"]:focus svg {
-  filter: drop-shadow(0 0 22px #22c55e) drop-shadow(0 0 8px #22c55e) brightness(1.25) !important;
+  filter: drop-shadow(0 0 22px #ffe066) drop-shadow(0 0 8px #ffe066) brightness(1.25) !important;
 }
 
 .bubble-toggle[aria-pressed="false"]:hover span,
 .bubble-toggle[aria-pressed="false"]:focus span,
 .bubble-toggle[aria-pressed="false"]:hover svg,
 .bubble-toggle[aria-pressed="false"]:focus svg {
-  filter: drop-shadow(0 0 22px #ef4444) drop-shadow(0 0 8px #ef4444) brightness(1.25) !important;
+  filter: drop-shadow(0 0 22px #fdca22) drop-shadow(0 0 8px #fdca22) brightness(1.25) !important;
 }
 
 /* Modern react-datepicker overrides */
@@ -213,7 +221,7 @@ input[type="time"]:focus {
 
 .react-datepicker__current-month,
 .react-datepicker__day-name {
-  color: #b91c1c !important;
+  color: #c59d16 !important;
   font-weight: 700 !important;
   font-size: 1.1rem !important;
   background: transparent !important;
@@ -230,25 +238,25 @@ input[type="time"]:focus {
   border: none !important;
   transition: background 0.18s, color 0.18s, box-shadow 0.18s;
   box-shadow: none !important;
-  color: #b91c1c !important;
+  color: #c59d16 !important;
 }
 
 .react-datepicker__day--selected,
 .react-datepicker__day--keyboard-selected {
-  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%) !important;
+  background: linear-gradient(90deg, #fdca22 0%, #ffe066 100%) !important;
   color: #fff !important;
   font-weight: 700 !important;
   box-shadow: 0 2px 12px 0 rgba(239,68,68,0.10);
 }
 
 .react-datepicker__day:hover {
-  background: #fee2e2 !important;
-  color: #b91c1c !important;
+  background: #fff7d1 !important;
+  color: #c59d16 !important;
 }
 
 .react-datepicker__day--today {
-  border: 2px solid #ef4444 !important;
-  color: #b91c1c !important;
+  border: 2px solid #fdca22 !important;
+  color: #c59d16 !important;
   background: #fff !important;
 }
 
@@ -258,7 +266,7 @@ input[type="time"]:focus {
 }
 
 .react-datepicker__navigation-icon::before {
-  border-color: #ef4444 !important;
+  border-color: #fdca22 !important;
   border-width: 2px 2px 0 0 !important;
   width: 12px !important;
   height: 12px !important;
@@ -282,6 +290,12 @@ input[type="time"]:focus {
   to { opacity: 1; transform: none;}
 }
 
+@keyframes heroZoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+
 .hero-btn {
   display: inline-flex;
   align-items: center;
@@ -290,7 +304,7 @@ input[type="time"]:focus {
   font-size: 1.15rem;
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(90deg, #f87171 0%, #f472b6 50%, #60a5fa 100%);
+  background: linear-gradient(90deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
   border: 1px solid rgba(255,255,255,0.3);
   border-radius: 999px;
   box-shadow: 0 4px 24px 0 rgba(59,130,246,0.10), 0 1.5px 0 0 rgba(0,0,0,0.04);
@@ -301,26 +315,49 @@ input[type="time"]:focus {
 }
 
 .hero-btn:hover {
-  background: linear-gradient(90deg, #60a5fa 0%, #f472b6 50%, #f87171 100%);
+  background: linear-gradient(90deg, #c59d16 0%, #fdca22 50%, #ffe066 100%);
   box-shadow: 0 6px 32px 0 rgba(59,130,246,0.18), 0 2px 0 0 rgba(0,0,0,0.06);
   transform: scale(1.05);
 }
 
 .hero-btn:active {
-  background: linear-gradient(90deg, #2563eb 0%, #10b981 100%);
+  background: linear-gradient(90deg, #c59d16 0%, #ffe066 100%);
   transform: scale(0.98);
 }
 
 .hero-btn--secondary {
   background: rgba(255,255,255,0.7);
-  color: #e11d48;
+  color: #c59d16;
   border: 1px solid rgba(255,255,255,0.3);
 }
 
 .hero-btn--secondary:hover {
-  background: rgba(255,255,255,0.9);
-  color: #be123c;
+  color: #a67c00;
 }
 
 .animate-fade-in { animation: fadeInUp 0.7s; }
+
+.text-gold {
+  color: var(--gold) !important;
+}
+.bg-gold {
+  background: var(--gold) !important;
+}
+
+button {
+  background: linear-gradient(90deg, var(--gold-light) 0%, var(--gold) 100%);
+  color: #fff;
+  border: 1px solid var(--gold-dark);
+}
+
+.text-accent { color: var(--accent); }
+.text-accent-dark { color: var(--accent-dark); }
+.bg-accent { background: var(--accent); }
+.bg-accent-gradient {
+  background: linear-gradient(90deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+}
+
+.hero-zoom-animate {
+  animation: heroZoom 12s ease-in-out infinite;
+}
 

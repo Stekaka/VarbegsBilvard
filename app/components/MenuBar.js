@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function MenuBar({ showBubbles, setShowBubbles }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -10,38 +11,17 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
       <div className="flex items-center justify-between px-4 sm:px-10 py-3 bg-white/20 backdrop-blur-2xl border-b border-white/30 shadow-lg glass-nav">
         <Link
           href="/"
-          className="flex items-center gap-2 text-2xl font-extrabold text-red-500 tracking-tight"
+          className="flex items-center gap-2 text-2xl font-extrabold tracking-tight"
+          style={{ minHeight: 40 }}
         >
-          {/* Car icon */}
-          <svg
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            className="text-red-400"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="3"
-              y="11"
-              width="18"
-              height="6"
-              rx="2"
-              fill="currentColor"
-            />
-            <rect
-              x="5"
-              y="7"
-              width="14"
-              height="6"
-              rx="2"
-              fill="currentColor"
-              opacity="0.5"
-            />
-            <circle cx="7" cy="19" r="2" fill="currentColor" />
-            <circle cx="17" cy="19" r="2" fill="currentColor" />
-          </svg>
-          <span>Varbegs Bilvård</span>
+          <Image
+            src="/VB-logo.png"
+            alt="Varbegs Bilvård logo"
+            width={65} // increase size (e.g. 56px)
+            height={65}
+            priority
+            style={{ marginTop: -8, marginBottom: -8 }} // pull logo up/down to overlap navbar padding
+          />
         </Link>
         <div className="hidden sm:flex gap-4 sm:gap-8 items-center">
           {/* Nav links */}
@@ -163,7 +143,7 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
             <Link
               key={item.href}
               href={item.href}
-              className="px-6 py-4 text-red-700 font-semibold border-b border-white/30 hover:bg-white/40 hover:text-red-600 transition"
+              className="px-6 py-4 text-accent font-semibold border-b border-white/30 hover:bg-white/40 hover:text-accent-dark transition"
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}
@@ -171,11 +151,8 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
           ))}
           {/* Bubble toggle in mobile menu */}
           <button
-            onClick={() => {
-              setShowBubbles((b) => !b);
-              setMobileMenuOpen(false);
-            }}
-            className="flex items-center justify-center gap-2 px-6 py-4 text-red-700 font-semibold hover:bg-white/40 hover:text-red-600 transition"
+            onClick={() => setShowBubbles((b) => !b)}
+            className="flex items-center justify-center gap-2 px-6 py-4 text-accent font-semibold hover:bg-white/40 hover:text-accent-dark transition"
             aria-pressed={showBubbles}
             title={showBubbles ? "Stäng bubblor" : "Visa bubblor"}
           >
@@ -193,7 +170,7 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
               </svg>
             ) : (
               <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="9" fill="#ef4444" />
+                <circle cx="10" cy="10" r="9" fill="var(--accent)" />
                 <path
                   d="M7 7l6 6M13 7l-6 6"
                   stroke="#fff"

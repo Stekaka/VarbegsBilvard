@@ -1,146 +1,177 @@
 "use client";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 import MenuBar from "../components/MenuBar";
-import CalendarSection from "../components/CalendarSection";
+import BubblesBackground from "../components/BubblesBackground";
+import { FaSnowflake, FaTools, FaExchangeAlt, FaWarehouse, FaStar } from "react-icons/fa";
 
 const tireServices = [
 	{
 		title: "Däckbyte",
-		desc: "Snabbt och säkert byte av sommar- och vinterdäck.",
-		price: "fr. 350 kr",
-		time: "30 min",
-		img: "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80",
-		features: [
-			"Byte av alla fyra däck",
-			"Kontroll av lufttryck",
-			"Åtdragning med momentnyckel",
-		],
-	},
-	{
-		title: "Däckbalansering",
-		desc: "Vi balanserar dina hjul för en tyst och säker körning.",
-		price: "fr. 200 kr",
-		time: "20 min",
-		img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80",
-		features: [
-			"Balansering av hjul",
-			"Vibrationstest",
-			"Montering & demontering",
-		],
+		price: "fr 299 kr",
+		icon: <FaExchangeAlt />,
+		desc: "Snabbt och säkert byte mellan sommar- och vinterdäck. Vi kontrollerar även däcktryck och mönsterdjup.",
 	},
 	{
 		title: "Däckhotell",
-		desc: "Förvara dina däck svalt, torrt och försäkrat hos oss.",
-		price: "fr. 495 kr/säsong",
-		time: "Säsong",
-		img: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80",
-		features: [
-			"Förvaring inomhus",
-			"Försäkring ingår",
-			"Tvätt av däck & fälg",
-		],
+		price: "fr 499 kr/säsong",
+		icon: <FaWarehouse />,
+		desc: "Förvara dina däck svalt, torrt och säkert hos oss. Vi tvättar och kontrollerar däcken inför varje säsong.",
+	},
+	{
+		title: "Balansering",
+		price: "fr 199 kr/hjul",
+		icon: <FaTools />,
+		desc: "Vi balanserar dina hjul för en tystare och säkrare körning samt minskat däckslitage.",
+	},
+	{
+		title: "Punkteringslagning",
+		price: "fr 299 kr",
+		icon: <FaStar />,
+		desc: "Snabb och professionell lagning av punkterade däck så att du kan köra vidare tryggt.",
+	},
+	{
+		title: "Nya däck & fälgar",
+		price: "Offert",
+		icon: <FaSnowflake />,
+		desc: "Vi erbjuder ett brett sortiment av nya däck och fälgar från ledande märken. Kontakta oss för offert!",
 	},
 ];
 
 export default function TiresPage() {
-	return (
-		<>
-			<MenuBar />
-			<main className="flex-1 w-full flex flex-col bg-gradient-to-br from-yellow-50 via-white to-gray-100 min-h-screen">
-				{/* Hero Section */}
-				<section className="relative w-full min-h-[350px] flex items-center justify-center overflow-hidden mb-12">
-					<Image
-						src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1200&q=80"
-						alt="Däckservice"
-						fill
-						priority
-						className="object-cover object-center"
-						style={{ zIndex: 1 }}
-					/>
-					<div
-						className="absolute inset-0 bg-gray-900/70"
-						style={{ zIndex: 2 }}
-					/>
-					<div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
-						<h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-lg mb-4">
-							Däckservice & Däckhotell
-						</h1>
-						<p className="text-xl sm:text-2xl text-gray-100 font-medium max-w-2xl mb-6 drop-shadow">
-							Tryggt, snabbt och smidigt – året runt. Boka tid för däckbyte,
-							balansering eller förvaring.
-						</p>
-					</div>
-				</section>
+	const [showBubbles, setShowBubbles] = useState(() => {
+		if (typeof window !== "undefined") {
+			const stored = localStorage.getItem("showBubbles");
+			return stored !== null ? stored === "true" : true;
+		}
+		return true;
+	});
 
-				{/* Services Section */}
-				<section className="w-full max-w-6xl mx-auto px-4 py-8 z-20 relative pb-20">
-					<h2 className="text-3xl font-bold text-yellow-900 mb-8 text-center drop-shadow-lg">
-						Våra däck-tjänster
-					</h2>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+	useEffect(() => {
+		const stored = localStorage.getItem("showBubbles");
+		if (stored !== null) setShowBubbles(stored === "true");
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("showBubbles", showBubbles);
+	}, [showBubbles]);
+
+	return (
+		<div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-gray-100 flex flex-col overflow-x-hidden relative">
+			<MenuBar showBubbles={showBubbles} setShowBubbles={setShowBubbles} />
+			{showBubbles && <BubblesBackground />}
+			{/* Decorative overlay */}
+			<div
+				className="pointer-events-none fixed inset-0 z-0"
+				aria-hidden
+			>
+				<div className="absolute top-0 left-0 w-1/2 h-1/2 bg-yellow-100 rounded-full blur-3xl opacity-40" />
+				<div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-yellow-200 rounded-full blur-2xl opacity-30" />
+				<div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gray-600 rounded-full blur-2xl opacity-30" />
+			</div>
+			<main className="flex-1 w-full flex flex-col relative z-10 pt-20">
+				<section className="w-full max-w-5xl mx-auto px-4 py-16">
+					<h1 className="text-4xl sm:text-5xl font-extrabold text-accent-dark mb-4 text-center drop-shadow-lg">
+						Däckservice & Däckhotell
+					</h1>
+					<p className="text-lg text-gray-700 text-center mb-12 max-w-2xl mx-auto">
+						Vi erbjuder allt inom däck – från däckbyte och förvaring till nya däck och fälgar. Alltid med personlig service, premiumkänsla och trygghet för dig och din bil.
+					</p>
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 						{tireServices.map((s) => (
 							<div
 								key={s.title}
-								className="relative bg-white/95 rounded-2xl shadow-2xl hover:shadow-yellow-200 border border-gray-100 p-0 flex flex-col overflow-hidden transition-all duration-300 group"
+								className="w-full max-w-xs mx-auto bg-white/90 rounded-3xl shadow-xl border border-yellow-100 p-6 flex flex-col items-center transition-all duration-300 group hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-200"
+								style={{
+									boxShadow:
+										"0 4px 32px 0 rgba(253,202,34,0.06), 0 2px 8px 0 rgba(0,0,0,0.08)",
+								}}
 							>
-								<div className="relative h-40 w-full">
-									<Image
-										src={s.img}
-										alt={s.title}
-										fill
-										className="object-cover"
-									/>
-									<div className="absolute top-3 left-3 bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+								<div className="mb-4 text-4xl text-accent drop-shadow-lg">
+									{s.icon}
+								</div>
+								<h2 className="text-xl font-bold text-accent-dark mb-2 text-center">
+									{s.title}
+								</h2>
+								<div className="mb-4">
+									<span
+										className="inline-block bg-gradient-to-r from-gold-light to-gold-dark text-white text-sm font-bold px-4 py-1 rounded-full shadow"
+										style={{
+											background:
+												"linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-dark))",
+											color: "#fff",
+										}}
+									>
 										{s.price}
-									</div>
-									<div className="absolute top-3 right-3 bg-white text-yellow-900 px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
-										{s.time}
-									</div>
+									</span>
 								</div>
-								<div className="p-6 flex-1 flex flex-col">
-									<h4 className="text-xl font-semibold text-yellow-900 mb-2">
-										{s.title}
-									</h4>
-									<p className="text-gray-700 mb-3">{s.desc}</p>
-									<ul className="flex-1 text-gray-700 mb-4">
-										{s.features.map((f) => (
-											<li key={f} className="flex items-center mb-2">
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													className="h-5 w-5 text-yellow-600 mr-2"
-													viewBox="0 0 20 20"
-													fill="currentColor"
-												>
-													<path
-														fillRule="evenodd"
-														d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 00-2 0v6a1 1 0 002 0V5zm-1 10a1 1 0 100-2 1 1 0 000 2z"
-														clipRule="evenodd"
-													/>
-												</svg>
-												{f}
-											</li>
-										))}
-									</ul>
-								</div>
+								<p className="text-gray-700 text-center mb-6">
+									{s.desc}
+								</p>
+								<button
+									className="glassy-btn glassy-btn-yellow mt-auto text-center font-bold w-full"
+									onClick={() => (window.location.href = "/contact")}
+								>
+									Kontakta oss
+								</button>
 							</div>
 						))}
 					</div>
 				</section>
-
-				{/* Booking Section */}
-				<section className="w-full max-w-3xl mx-auto px-4 py-12">
-					<h3 className="text-2xl font-bold text-yellow-900 mb-4 text-center drop-shadow-lg">
-						Boka tid för däckservice
-					</h3>
-					<p className="text-gray-800 text-lg text-center mb-8">
-						Välj en tid som passar dig för däckbyte, balansering eller förvaring.
-						Vi hjälper dig snabbt och säkert!
+				{/* Premium info section */}
+				<section className="max-w-3xl mx-auto mb-16 px-4 pt-10 pb-10 rounded-2xl shadow-inner bg-white/80 text-center">
+					<h2 className="text-2xl font-bold text-accent-dark mb-4 drop-shadow-lg">
+						Varför välja Varbegs Bilvård för dina däck?
+					</h2>
+					<p
+						className="text-gray-800 text-lg mb-4 drop-shadow-lg"
+						style={{
+							textShadow:
+								"0 4px 16px rgba(0,0,0,0.10), 0 1.5px 0px rgba(0,0,0,0.08)",
+						}}
+					>
+						Vi är Varbergs mest pålitliga däckpartner. Med moderna maskiner, kunnig personal och fokus på kvalitet tar vi hand om dina däck – året om. Vi erbjuder flexibla tider, snabb service och alltid ett leende på köpet.
 					</p>
-					<CalendarSection />
+					<div className="flex flex-wrap justify-center gap-4 mt-6">
+						<span className="inline-block px-6 py-2 rounded-full bg-accent-gradient text-white font-semibold shadow"
+							style={{
+								background:
+									"linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-dark))",
+								color: "#fff",
+							}}
+						>
+							Däckhotell med fullservice
+						</span>
+						<span className="inline-block px-6 py-2 rounded-full bg-accent-gradient text-white font-semibold shadow"
+							style={{
+								background:
+									"linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-dark))",
+								color: "#fff",
+							}}
+						>
+							Snabbt däckbyte
+						</span>
+						<span className="inline-block px-6 py-2 rounded-full bg-accent-gradient text-white font-semibold shadow"
+							style={{
+								background:
+									"linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-dark))",
+								color: "#fff",
+							}}
+						>
+							Nya däck & fälgar
+						</span>
+						<span className="inline-block px-6 py-2 rounded-full bg-accent-gradient text-white font-semibold shadow"
+							style={{
+								background:
+									"linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-dark))",
+								color: "#fff",
+							}}
+						>
+							Personlig service
+						</span>
+					</div>
 				</section>
 			</main>
-
-			{/* Footer Section */}
+			{/* Footer */}
 			<footer
 				className="w-full bg-gray-900/80 backdrop-blur-xl border-t border-white/20 text-gray-100 text-center py-6 mt-12 rounded-t-3xl shadow-inner"
 				style={{
@@ -155,6 +186,6 @@ export default function TiresPage() {
 					&copy; {new Date().getFullYear()} Varbegs Bilvård. All rights reserved.
 				</p>
 			</footer>
-		</>
+		</div>
 	);
 }

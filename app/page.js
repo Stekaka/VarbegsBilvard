@@ -31,7 +31,7 @@ const services = [
 		title: "Utvändig Rekond",
 		price: "1600:-",
 		time: "4 tim",
-		img: "https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80",
+		img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
 		features: [
 			"Polering",
 			"Motortvätt",
@@ -137,7 +137,7 @@ export default function Home() {
 						alt="Hero"
 						fill
 						priority
-						className="object-cover object-center transition-all duration-700"
+						className="object-cover object-center transition-all duration-700 hero-zoom-animate"
 					/>
 					<div className="absolute inset-0 bg-gray-900/80" />
 					<div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
@@ -154,19 +154,20 @@ export default function Home() {
 						<div className="flex gap-4 justify-center">
 							<Link
 								href={heroSlides[slide].cta.href}
-								className="px-7 py-3 rounded-full font-semibold text-lg shadow-xl bg-gradient-to-r from-red-500 to-red-700 text-white backdrop-blur-md bg-opacity-80 border border-white/30 hover:scale-105 hover:from-red-600 hover:to-red-800 transition-all duration-200"
 								style={{
-									boxShadow: "0 4px 32px 0 rgba(239,68,68,0.18), 0 1.5px 0 0 rgba(0,0,0,0.04)",
-									textShadow: "0 2px 8px rgba(0,0,0,0.18)",
+									background:
+										"linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-dark))",
+									color: "#fff",
 								}}
+								className="px-7 py-3 rounded-full font-semibold text-lg shadow-xl"
 							>
 								{heroSlides[slide].cta.text}
 							</Link>
 							<Link
 								href={heroSlides[slide].cta2.href}
-								className="px-7 py-3 rounded-full font-semibold text-lg shadow bg-white/80 text-red-700 border border-white/30 hover:bg-white/90 hover:text-red-800 transition-all duration-200"
+								className="px-7 py-3 rounded-full font-semibold text-lg shadow bg-white/80 text-accent border border-white/30 hover:bg-white/90 hover:text-accent-dark transition-all duration-200"
 								style={{
-									boxShadow: "0 2px 12px 0 rgba(239,68,68,0.10)",
+									boxShadow: "0 2px 12px 0 rgba(253,202,34,0.10)",
 									textShadow: "0 1px 4px rgba(0,0,0,0.10)",
 								}}
 							>
@@ -177,14 +178,14 @@ export default function Home() {
 					{/* Slider arrows */}
 					<button
 						onClick={prevSlide}
-						className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-6 shadow-lg z-20 group"
+						className="absolute left-4 top-1/2 -translate-y-1/2 z-20 group outline-none focus:outline-none border-none bg-transparent p-0 m-0"
 						aria-label="Föregående"
-						style={{ background: "rgba(255, 255, 255, 0)" }}
+						style={{ background: "transparent", border: "none", boxShadow: "none" }}
 					>
 						<span
-							className="text-white transition-all duration-200 group-hover:text-white"
+							className="text-white transition-all duration-200 group-hover:text-accent"
 							style={{
-								fontSize: "2.25rem", // text-4xl
+								fontSize: "2.25rem",
 								display: "inline-block",
 								transition: "all 0.2s",
 							}}
@@ -202,14 +203,14 @@ export default function Home() {
 					</button>
 					<button
 						onClick={nextSlide}
-						className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-6 shadow-lg z-20 group"
+						className="absolute right-4 top-1/2 -translate-y-1/2 z-20 group outline-none focus:outline-none border-none bg-transparent p-0 m-0"
 						aria-label="Nästa"
-						style={{ background: "rgba(255, 255, 255, 0)" }}
+						style={{ background: "transparent", border: "none", boxShadow: "none" }}
 					>
 						<span
-							className="text-white transition-all duration-200 group-hover:text-white"
+							className="text-white transition-all duration-200 group-hover:text-accent"
 							style={{
-								fontSize: "2.25rem", // text-4xl
+								fontSize: "2.25rem",
 								display: "inline-block",
 								transition: "all 0.2s",
 							}}
@@ -228,7 +229,7 @@ export default function Home() {
 				</section>
 				{/* ABOUT US SECTION */}
 				<section className="max-w-3xl mx-auto mb-12 px-4 pt-30 pb-20">
-					<h2 className="text-3xl font-bold text-red-900 mb-4 text-center drop-shadow-lg">
+					<h2 className="text-3xl font-bold text-accent-dark mb-4 text-center drop-shadow-lg">
 						Varför välja Varbegs Bilvård?
 					</h2>
 					<p
@@ -247,26 +248,26 @@ export default function Home() {
 
 				{/* SERVICE CARDS */}
 				<section className="w-full max-w-6xl mx-auto px-4 py-8 z-20 relative pb-20">
-					<h3 className="text-2xl font-bold text-red-900 mb-8 text-center">
+					<h3 className="text-2xl font-bold text-accent-dark mb-8 text-center">
 						Våra tjänster & priser
 					</h3>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 						{services.map((s) => (
 							<div
 								key={s.title}
-								className="relative bg-white/95 rounded-2xl shadow-2xl hover:shadow-red-200 border border-gray-100 p-0 flex flex-col overflow-hidden transition-all duration-300 group"
+								className="relative bg-white/95 rounded-2xl shadow-2xl hover:shadow-yellow-200 border border-gray-100 p-0 flex flex-col overflow-hidden transition-all duration-300 group"
 							>
 								<div className="relative h-40 w-full">
 									<Image src={s.img} alt={s.title} fill className="object-cover" />
-									<div className="absolute top-3 left-3 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+									<div className="absolute top-3 left-3 bg-accent text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
 										{s.price}
 									</div>
-									<div className="absolute top-3 right-3 bg-white text-red-900 px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+									<div className="absolute top-3 right-3 bg-white text-accent-dark px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
 										{s.time}
 									</div>
 								</div>
 								<div className="p-6 flex-1 flex flex-col">
-									<h4 className="text-xl font-semibold text-red-900 mb-2">
+									<h4 className="text-xl font-semibold text-accent-dark mb-2">
 										{s.title}
 									</h4>
 									<ul className="flex-1 text-gray-700 mb-4">
@@ -274,7 +275,7 @@ export default function Home() {
 											<li key={f} className="flex items-center mb-2">
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
-													className="h-5 w-5 text-red-600 mr-2"
+													className="h-5 w-5 text-accent mr-2"
 													viewBox="0 0 20 20"
 													fill="currentColor"
 												>
@@ -300,8 +301,6 @@ export default function Home() {
 					</div>
 				</section>
 
-
-
 				{/* GIFT CARD SECTION */}
 				<section
 					className="w-full max-w-full mx-auto px-4 py-20 min-h-[400px] flex flex-col items-center justify-center gap-6 rounded-2xl shadow-inner mb-12 text-center"
@@ -320,9 +319,9 @@ export default function Home() {
 					</p>
 					<Link
 						href="/giftcards"
-						className="inline-block px-8 py-3 rounded-full font-semibold text-lg shadow-xl bg-gradient-to-r from-red-500 to-red-700 text-white backdrop-blur-md bg-opacity-80 border border-white/30 hover:scale-105 hover:from-red-600 hover:to-red-800 transition-all duration-200"
+						className="inline-block px-8 py-3 rounded-full font-semibold text-lg shadow-xl bg-accent-gradient text-white backdrop-blur-md bg-opacity-80 border border-white/30 hover:scale-105 transition-all duration-200"
 						style={{
-							boxShadow: "0 4px 32px 0 rgba(239,68,68,0.18), 0 1.5px 0 0 rgba(0,0,0,0.04)",
+							boxShadow: "0 4px 32px 0 rgba(253,202,34,0.18), 0 1.5px 0 0 rgba(0,0,0,0.04)",
 							textShadow: "0 2px 8px rgba(0,0,0,0.18)",
 						}}
 						role="button"
@@ -334,7 +333,7 @@ export default function Home() {
 
 				{/* TESTIMONIALS */}
 				<section id="testimonials" className="w-full max-w-5xl mx-auto px-4 py-16">
-					<h4 className="text-2xl font-bold text-yellow-900 mb-8 text-center">
+					<h4 className="text-2xl font-bold text-accent-dark mb-8 text-center">
 						Vad säger våra kunder
 					</h4>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -344,7 +343,7 @@ export default function Home() {
 								className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center"
 							>
 								<p className="text-gray-800 italic mb-4 text-center">&quot;{t.text}&quot;</p>
-								<div className="font-bold text-blue-900">{t.name}</div>
+								<div className="font-bold text-accent-dark">{t.name}</div>
 							</div>
 						))}
 					</div>
