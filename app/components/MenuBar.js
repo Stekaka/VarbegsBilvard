@@ -108,79 +108,101 @@ export default function MenuBar({ showBubbles, setShowBubbles }) {
         </div>
         {/* Hamburger icon for mobile */}
         <button
-          className="sm:hidden p-2 rounded focus:outline-none"
+          className="sm:hidden p-2 focus:outline-none bg-transparent border-none shadow-none"
           onClick={() => setMobileMenuOpen((open) => !open)}
           aria-label="Öppna meny"
         >
-          <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
-            <rect x="4" y="6" width="16" height="2" rx="1" fill="#ef4444" />
-            <rect x="4" y="11" width="16" height="2" rx="1" fill="#ef4444" />
-            <rect x="4" y="16" width="16" height="2" rx="1" fill="#ef4444" />
+          <svg width="32" height="32" fill="none" viewBox="0 0 24 24">
+            <rect x="4" y="6" width="16" height="2" rx="1" fill="var(--accent)" />
+            <rect x="4" y="11" width="16" height="2" rx="1" fill="var(--accent)" />
+            <rect x="4" y="16" width="16" height="2" rx="1" fill="var(--accent)" />
           </svg>
         </button>
       </div>
       {/* Mobile dropdown menu */}
       {mobileMenuOpen && (
-        <div className="sm:hidden absolute top-full left-0 w-full z-50 flex flex-col items-stretch
-    bg-white/30 backdrop-blur-2xl border-b border-white/30 shadow-lg glass-nav
-    animate-fade-in"
-          style={{
-            borderTopLeftRadius: "0 0 1.5rem 1.5rem",
-            borderTopRightRadius: "0 0 1.5rem 1.5rem",
-            // Optional: add a little extra blur for mobile
-            WebkitBackdropFilter: "blur(18px)",
-            backdropFilter: "blur(18px)",
-          }}
-        >
-          {[
-            { href: "/carwash", label: "Biltvätt" },
-            { href: "/tires", label: "Däck" },
-            { href: "/service", label: "Service" },
-            { href: "/giftcards", label: "Presentkort" },
-            { href: "#testimonials", label: "Kundomdömen" },
-            { href: "/contact", label: "Kontakt" },
-          ].map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="px-6 py-4 text-accent font-semibold border-b border-white/30 hover:bg-white/40 hover:text-accent-dark transition"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
-          {/* Bubble toggle in mobile menu */}
-          <button
-            onClick={() => setShowBubbles((b) => !b)}
-            className="flex items-center justify-center gap-2 px-6 py-4 text-accent font-semibold hover:bg-white/40 hover:text-accent-dark transition"
-            aria-pressed={showBubbles}
-            title={showBubbles ? "Stäng bubblor" : "Visa bubblor"}
+        <>
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden
+          />
+          {/* Slide-in menu */}
+          <div
+            className="fixed top-0 right-0 h-full w-1/2 max-w-xs bg-white/90 backdrop-blur-2xl border-l border-yellow-100 shadow-2xl z-50 flex flex-col items-stretch animate-slide-in"
+            style={{
+              borderTopLeftRadius: "1.5rem",
+              borderBottomLeftRadius: "1.5rem",
+              transition: "transform 0.3s cubic-bezier(.4,0,.2,1)",
+            }}
           >
-            <span style={{ fontSize: "1.5em" }}>🫧</span>
-            {showBubbles ? (
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="9" fill="#22c55e" />
-                <path
-                  d="M6 10.5l2.5 2.5L14 7.5"
-                  stroke="#fff"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            ) : (
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="9" fill="var(--accent)" />
-                <path
-                  d="M7 7l6 6M13 7l-6 6"
-                  stroke="#fff"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            )}
-          </button>
-        </div>
+            <button
+              className="self-end m-4 text-3xl text-accent hover:text-accent-dark font-bold"
+              onClick={() => setMobileMenuOpen(false)}
+              aria-label="Stäng meny"
+            >
+              &times;
+            </button>
+            {[
+              { href: "/carwash", label: "Biltvätt" },
+              { href: "/tires", label: "Däck" },
+              { href: "/service", label: "Service" },
+              { href: "/giftcards", label: "Presentkort" },
+              { href: "#testimonials", label: "Kundomdömen" },
+              { href: "/contact", label: "Kontakt" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="px-6 py-4 text-accent font-semibold border-b border-white/30 hover:bg-white/40 hover:text-accent-dark transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+            {/* Bubble toggle in mobile menu */}
+            <button
+              onClick={() => setShowBubbles((b) => !b)}
+              className="flex items-center justify-center gap-2 px-6 py-4 text-accent font-semibold hover:bg-white/40 hover:text-accent-dark transition"
+              aria-pressed={showBubbles}
+              title={showBubbles ? "Stäng bubblor" : "Visa bubblor"}
+            >
+              <span style={{ fontSize: "1.5em" }}>🫧</span>
+              {showBubbles ? (
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="9" fill="#22c55e" />
+                  <path
+                    d="M6 10.5l2.5 2.5L14 7.5"
+                    stroke="#fff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="9" fill="var(--accent)" />
+                  <path
+                    d="M7 7l6 6M13 7l-6 6"
+                    stroke="#fff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              )}
+            </button>
+          </div>
+          <style jsx global>{`
+            @keyframes slide-in {
+              from { transform: translateX(100%); }
+              to { transform: translateX(0); }
+            }
+            .animate-slide-in {
+              animation: slide-in 0.3s cubic-bezier(.4,0,.2,1);
+            }
+          `}</style>
+        </>
       )}
     </nav>
   );
